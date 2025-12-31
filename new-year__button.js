@@ -1,4 +1,8 @@
 (function () {
-    'use strict';
-    document.querySelectorAll('.new-year__button').forEach(e => e.remove());
+    'use strict';	
+    Lampa.Listener.follow('full', function (e) {
+        if (e.type == 'complite') {
+            e.object.activity.render().find('.new-year__button').remove();
+        }
+    });
 })();
