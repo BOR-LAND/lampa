@@ -18,10 +18,11 @@
     // Запускаем слежку за всем документом
     observer.observe(document.documentElement, {
         childList: true,
-        subtree: true
+        // subtree: true
     });
 
     // 3. И на всякий случай запускаем проверку сразу при старте скрипта
     killSock();
 
 })();
+
