@@ -1,15 +1,23 @@
 (function () {
     'use strict';
-    // Слушаем событие готовности приложения
+
+    // Функция удаления
+    var removeSock = function() {
+        var btn = document.querySelector('.new-year_button, .new-year__button');
+        if (btn) btn.remove();
+    };
+
+    // Подписываемся на макет
+    Lampa.Listener.follow('layout', function (e) {
+        if (e.type == 'complete') {
+            removeSock();
+        }
+    });
+
+    // На случай, если событие layout уже пролетело к моменту загрузки скрипта
     Lampa.Listener.follow('app', function (e) {
         if (e.type == 'ready') {
-            // Вырезаем кнопку, как только приложение готово
-            // Добавляем небольшую задержку, чтобы Lampa успела отрисовать шапку
-            setTimeout(function() {
-                document.querySelectorAll('.new-year_button, .new-year__button').forEach(function(el) {
-                    el.remove();
-                });
-            }, 100);
+            removeSock();
         }
     });
 })();
