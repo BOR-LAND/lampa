@@ -1,30 +1,24 @@
 (function () {
     'use strict';
 
-var killSock = function() {
-    var btn = document.querySelector('.new-year__button, .new-year_button');
-    if (btn) {
-        // Эта строчка покажет в консоли, где именно лежит кнопка
-        console.log('Кнопка найдена в контейнере:', btn.parentElement);
-        btn.remove();
-    }
-};
+    console.log('[test] script start', performance.now());
 
-    // 2. Используем MutationObserver — он следит за появлением элементов в реальном времени.
-    // Это работает быстрее и надежнее любых событий Lampa.
-    var observer = new MutationObserver(function(mutations) {
-        killSock();
+    var el = document.querySelector('.head__actions');
+    if (el) {
+        console.log('[test] .head__actions already exists', performance.now());
+        return;
+    }
+
+    var observer = new MutationObserver(function () {
+        var node = document.querySelector('.head__actions');
+        if (node) {
+            console.log('[test] .head__actions appeared', performance.now());
+            observer.disconnect();
+        }
     });
 
-    // Запускаем слежку за всем документом
     observer.observe(document.documentElement, {
         childList: true,
-        // subtree: true
+        subtree: true
     });
-
-    // 3. И на всякий случай запускаем проверку сразу при старте скрипта
-    killSock();
-
 })();
-
-
