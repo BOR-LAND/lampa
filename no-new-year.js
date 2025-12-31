@@ -1,11 +1,27 @@
 (function () {
     'use strict';
 
-    // Удаляем кнопку при добавлении плагина
-    // document.querySelectorAll('.new-year__button').forEach(e => e.remove());
+    // 1. Создаем функцию "снайпера"
+    var killSock = function() {
+        var btn = document.querySelector('.new-year__button');
+        if (btn) {
+            btn.remove();
+        }
+    };
 
-    // 1. Ставим флаг, что плагин якобы уже запущен. 
-    // Настоящий новогодний плагин увидит это и сразу выключится.
-    window.new_year = true;
+    // 2. Используем MutationObserver — он следит за появлением элементов в реальном времени.
+    // Это работает быстрее и надежнее любых событий Lampa.
+    var observer = new MutationObserver(function(mutations) {
+        killSock();
+    });
+
+    // Запускаем слежку за всем документом
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
+
+    // 3. И на всякий случай запускаем проверку сразу при старте скрипта
+    killSock();
+
 })();
-
