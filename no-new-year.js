@@ -1,24 +1,28 @@
 (function () {
     'use strict';
 
-    console.log('[test] script start', performance.now());
-
-    var el = document.querySelector('.head__actions');
-    if (el) {
-        console.log('[test] .head__actions already exists', performance.now());
-        return;
-    }
-
-    var observer = new MutationObserver(function () {
-        var node = document.querySelector('.head__actions');
-        if (node) {
-            console.log('[test] .head__actions appeared', performance.now());
+    // 1. Создаем функцию "снайпера"
+    function removeNewYearButton() {
+        var btn = document.querySelector('.new-year__button');
+        if (btn) {
+            btn.remove();
             observer.disconnect();
+            observer = null;
         }
+    };
+
+    // 2. Используем MutationObserver — он следит за появлением элементов в реальном времени.
+    // Это работает быстрее и надежнее любых событий Lampa.
+    var observer = new MutationObserver(function() {
+        removeNewYearButton();
     });
 
+    // Запускаем слежку за всем документом
     observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
+        childList: true
     });
+
+    // 3. И на всякий случай запускаем проверку сразу при старте скрипта
+    removeNewYearButton();
+
 })();
