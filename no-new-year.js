@@ -1,13 +1,14 @@
 (function () {
     'use strict';
 
-    // 1. Создаем функцию "снайпера"
-    var killSock = function() {
-        var btn = document.querySelector('.new-year__button');
-        if (btn) {
-            btn.remove();
-        }
-    };
+var killSock = function() {
+    var btn = document.querySelector('.new-year__button, .new-year_button');
+    if (btn) {
+        // Эта строчка покажет в консоли, где именно лежит кнопка
+        console.log('Кнопка найдена в контейнере:', btn.parentElement);
+        btn.remove();
+    }
+};
 
     // 2. Используем MutationObserver — он следит за появлением элементов в реальном времени.
     // Это работает быстрее и надежнее любых событий Lampa.
@@ -25,4 +26,5 @@
     killSock();
 
 })();
+
 
