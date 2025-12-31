@@ -1,23 +1,15 @@
-(function () {
-    'use strict';
+(function() {
+    console.log('--- ТЕСТ ЗАПУЩЕН ---');
 
-    // Функция удаления
-    var removeSock = function() {
+    Lampa.Listener.follow('all', function (e) {
         var btn = document.querySelector('.new-year_button, .new-year__button');
-        if (btn) btn.remove();
-    };
-
-    // Подписываемся на макет
-    Lampa.Listener.follow('layout', function (e) {
-        if (e.type == 'complete') {
-            removeSock();
-        }
-    });
-
-    // На случай, если событие layout уже пролетело к моменту загрузки скрипта
-    Lampa.Listener.follow('app', function (e) {
-        if (e.type == 'ready') {
-            removeSock();
+        var status = btn ? '✅ НАЙДЕНА' : '❌ НЕТУ';
+        
+        console.log('Событие: [' + e.event + '] тип: [' + e.type + '] | Кнопка: ' + status);
+        
+        // Если кнопка нашлась именно в этот момент - мы поймали событие
+        if (btn) {
+            console.warn('!!! Кнопку можно резать на событии: ' + e.event + ' (' + e.type + ')');
         }
     });
 })();
